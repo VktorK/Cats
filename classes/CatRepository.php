@@ -15,12 +15,18 @@ class CatRepository {
                     c.GENDER, 
                     c.AGE, 
                     c.MOTHER_ID, 
-                    m.NAME AS MOTHER_NAME
+                    m.NAME AS MOTHER_NAME,
+                    GROUP_CONCAT(f.NAME SEPARATOR ', ') AS FATHER_NAMES
                 FROM 
                     cats c
                 LEFT JOIN 
                     cats m ON c.MOTHER_ID = m.ID
-            ";
+                LEFT JOIN
+                    possible_fathers pf ON c.ID = pf.CAT_ID
+                LEFT JOIN
+                    cats f ON pf.FATHER_ID = f.ID
+                GROUP BY 
+                    c.ID";
         
             $stmt = $this->db->prepare($query);
             $stmt->execute();

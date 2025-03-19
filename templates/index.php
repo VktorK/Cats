@@ -20,8 +20,8 @@
                         <td><?php echo htmlspecialchars($cat['NAME']); ?></td>
                         <td><?php echo htmlspecialchars($cat['GENDER']); ?></td>
                         <td><?php echo htmlspecialchars($cat['AGE']); ?></td>
-                        <td><?php echo htmlspecialchars($cat['MOTHER_NAME']); ?></td>
-                        <td><?php echo htmlspecialchars($cat['FATHER_ID'] ?? "Необходим тест на отцовство"); ?></td>
+                        <td><?php echo htmlspecialchars($cat['MOTHER_NAME'] ?? 'Подобрали на улице'); ?></td>
+                        <td><?php echo htmlspecialchars($cat['FATHER_NAMES'] ?? "Необходим тест на отцовство"); ?></td>
                         <td>
                             <a href="edit.php?id=<?php echo $cat['ID']; ?>" class="btn btn-warning btn-sm">Редактировать</a>
                             <a href="delete.php?id=<?php echo $cat['ID']; ?>" class="btn btn-danger btn-sm">Удалить</a>

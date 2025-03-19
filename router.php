@@ -1,29 +1,30 @@
 <?php
-
 $request = $_SERVER['REQUEST_URI'];
 
 $request = strtok($request, '?');
 
+$basePath = '/Cats';
+if (strpos($request, $basePath) === 0) {
+    $request = substr($request, strlen($basePath));
+}
+
+
 switch ($request) {
     case '/':
     case '/index.php':
-        include_once 'index.php';
+        require_once 'index.php';
         break;
 
-    case '/add_cat.php':
-        include_once 'add_cat.php';
+    case '/create':
+        require_once 'actions/create.php';
         break;
 
-    case '/filter_cats.php':
-        include_once 'filter_cats.php';
-        break;
-
-    case '/edit_or_delete_cat.php':
-        include_once 'edit_or_delete_cat.php';
+    case '/filter':
+        require_once 'actions/filter.php';
         break;
 
     default:
         http_response_code(404);
-        include_once '404.php';
+        require_once 'actions/404.php';
         break;
 }
