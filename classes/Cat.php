@@ -5,7 +5,7 @@
         private string $name;
         private string $gender;
         private int $age;
-        private int $motherId;
+        private ?int $motherId;
         private array $fatherIds;
         private string $table = 'cats';
 
@@ -43,14 +43,14 @@
             return $this->age;
         }
 
-        public function getMotherId(): int 
+        public function getMotherId(): ?int
         {
-            return $this->motherId;
+            return $this->motherId ?? null;
         }
 
-        public function getFatherIds(): array 
+        public function getFatherIds(): ?array
         {
-            return $this->fatherIds;
+            return $this->fatherIds ?? null;
         }
 
         public function setId($id): void 

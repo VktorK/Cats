@@ -17,14 +17,32 @@
             <tbody>
                 <?php foreach($cats as $cat): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($cat['NAME']); ?></td>
-                        <td><?php echo htmlspecialchars($cat['GENDER']); ?></td>
-                        <td><?php echo htmlspecialchars($cat['AGE']); ?></td>
-                        <td><?php echo htmlspecialchars($cat['MOTHER_NAME'] ?? 'Подобрали на улице'); ?></td>
-                        <td><?php echo htmlspecialchars($cat['FATHER_NAMES'] ?? "Необходим тест на отцовство"); ?></td>
                         <td>
-                            <a href="edit.php?id=<?php echo $cat['ID']; ?>" class="btn btn-warning btn-sm">Редактировать</a>
-                            <a href="delete.php?id=<?php echo $cat['ID']; ?>" class="btn btn-danger btn-sm">Удалить</a>
+                            <a href="?act=show&id=<?php echo $cat['ID']; ?>" style="color: black; text-decoration: none;">
+                                <?php echo htmlspecialchars($cat['NAME']); ?>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="?act=show&id=<?php echo $cat['ID']; ?>" style="color: black; text-decoration: none;">
+                                <?php echo htmlspecialchars($cat['GENDER'] == 'male' ? "Мужской" : "Женский"); ?>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="?act=show&id=<?php echo $cat['ID']; ?>" style="color: black; text-decoration: none;">
+                                <?php echo htmlspecialchars($cat['AGE']); ?>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="?act=showChild&id=<?php echo $cat['MOTHER_ID'] ? : 'error'; ?>" style="color: black; text-decoration: none;">
+                                <?php echo htmlspecialchars($cat['MOTHER_NAME'] ?? 'Подобрали на улице'); ?>
+                            </a>
+                        </td>
+                        <td>
+                            <?php echo htmlspecialchars($cat['FATHER_NAMES'] ?? "Необходим тест на отцовство"); ?>
+                        </td>
+                        <td>
+                            <a href="edit.php?id=<?= $cat['ID']; ?>" class="btn btn-warning btn-sm">Редактировать</a>
+                            <a href="?act=delete&id=<?php echo $cat['ID']; ?>" class="btn btn-danger btn-sm">Удалить</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

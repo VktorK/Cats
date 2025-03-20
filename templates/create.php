@@ -1,18 +1,20 @@
-<?php include_once '../templates/layouts/header.php'; ?>
+<?php require_once 'templates/layouts/header.php'; ?>
 
 <main class="container my-5">
     <h2 class="mb-4">Добавить кошку</h2>
-    <form action="add_cat.php" method="POST" class="bg-light p-4 rounded shadow">
+    <form action="#" method="POST" class="bg-light p-4 rounded shadow">
         <div class="mb-3">
             <label for="name" class="form-label">Имя:</label>
             <input type="text" name="name" class="form-control" required>
         </div>
         <div class="mb-3">
             <label for="gender" class="form-label">Пол:</label>
-            <select name="gender" class="form-select" required>
-                <option value="male">Мужской</option>
-                <option value="female">Женский</option>
-            </select>
+            <label>
+                <select name="gender" class="form-select" required>
+                    <option value="male">Мужской</option>
+                    <option value="female">Женский</option>
+                </select>
+            </label>
         </div>
         <div class="mb-3">
             <label for="age" class="form-label">Возраст:</label>
@@ -30,4 +32,4 @@
     </form>
 </main>
 
-<?php include_once '../templates/layouts/footer.php'; ?>
+<?php require_once 'templates/layouts/footer.php'; ?>
