@@ -23,8 +23,8 @@
                     <td><?php echo htmlspecialchars($cat['MOTHER_NAME'] ?? 'Подобрали на улице'); ?></td>
                     <td><?php echo htmlspecialchars($cat['FATHER_NAMES'] ?? "Необходим тест на отцовство"); ?></td>
                     <td>
-                        <a href="edit.php?id=<?= $cat['ID']; ?>" class="btn btn-warning btn-sm">Редактировать</a>
-                        <a href="?act=delete&id=<?php echo $cat['ID']; ?>" class="btn btn-danger btn-sm">Удалить</a>
+                        <a href="?act=edit&id=<?= $cat['ID']; ?>" class="btn btn-warning btn-sm">Редактировать</a>
+                        <a href="?act=delete&id=<?= $cat['ID']; ?>" class="btn btn-danger btn-sm">Удалить</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

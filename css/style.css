@@ -1,32 +1,79 @@
-body {
-    margin: 0;
-    padding: 0;
+
+.cat-info {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
 }
-.container {
+
+.cat-info h1 {
     text-align: center;
-    color: #fff;
+    color: #333;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
 }
-h1 {
+
+.cat-detail {
+    margin: 15px 0;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+    color: #555;
+}
+
+.cat-detail strong {
+    color: #333;
+    font-weight: bold;
+}
+
+.cat-info + p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #ff6b6b;
+    margin-top: 20px;
+}
+
+.container-404 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+.title-404 {
     font-size: 10rem;
     margin: 0;
     animation: float 3s ease-in-out infinite;
 }
-h2 {
+
+.subtitle-404 {
     font-size: 2rem;
     margin: 20px 0;
 }
-p {
+
+.text-404 {
     font-size: 1.2rem;
     margin: 10px 0;
 }
-a {
+
+.image-404 {
+    width: 150px;
+    margin: 20px 0;
+    animation: float 3s ease-in-out infinite;
+}
+
+.link-404 {
     color: #fff;
     text-decoration: none;
     border: 2px solid #fff;
@@ -34,10 +81,12 @@ a {
     border-radius: 25px;
     transition: all 0.3s ease;
 }
-a:hover {
+
+.link-404:hover {
     background: #fff;
     color: #ff9a9e;
 }
+
 @keyframes float {
     0%, 100% {
         transform: translateY(0);
@@ -46,7 +95,7 @@ a:hover {
         transform: translateY(-20px);
     }
 }
-.astronaut {
-    width: 150px;
-    animation: float 3s ease-in-out infinite;
+
+footer {
+    flex-shrink: 0;
 }

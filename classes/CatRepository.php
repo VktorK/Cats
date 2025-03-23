@@ -78,20 +78,22 @@ class CatRepository {
 
     public function addCat(Cat $cat):void 
     {
-        $this->saveCat($cat);
+        $query = "INSERT INTO $this->database (NAME, GENDER, AGE, MOTHER_ID) VALUES (:name, :gender, :age, :mother_id)";
+        $this->saveCat($query,$cat);
     }
 
 
     public function editCat(Cat $cat,$id):void
     {
-        $this->saveCat($cat,$id);
+        $query = "UPDATE $this->database SET name = :name, gender = :gender, age = :age, mother_id = :mother_id WHERE id = :id";
+        $this->saveCat($query,$cat,$id);
     }
 
     public function deleteCat($id): void 
     {
         $query = "DELETE FROM $this->database WHERE id = :id";
         $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
     }
 
@@ -116,14 +118,9 @@ class CatRepository {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    private function saveCat(Cat $cat, $id = null): void
+    private function saveCat($query,Cat $cat, $id = null): void
     {
-        if ($id) {
-            $query = "UPDATE $this->database SET name = :name, gender = :gender, age = :age, mother_id = :mother_id WHERE id = :id";
-        } else {
-            $query = "INSERT INTO $this->database (NAME, GENDER, AGE, MOTHER_ID) VALUES (:name, :gender, :age, :mother_id)";
-        }
-
+       
         $stmt = $this->db->prepare($query);
 
         $name = $cat->getName();
@@ -182,6 +179,35 @@ class CatRepository {
         };
     }
 
+    public function getOldCat($id) 
+    {
+      return $this->getCat($id);  
+    }
 
+    private function getCat($id) : ?array
+    {
+        $query =  "
+        SELECT 
+            c.*, 
+            m.NAME AS MOTHER_NAME,
+            m.ID AS MOTHER_ID,
+            GROUP_CONCAT(f.ID SEPARATOR ', ') AS FATHER_ID,
+            GROUP_CONCAT(f.NAME SEPARATOR ', ') AS FATHER_NAME
+        FROM 
+            $this->database c
+        LEFT JOIN 
+            $this->database m ON c.MOTHER_ID = m.ID
+        LEFT JOIN
+            $this->fatherDatabase pf ON c.ID = pf.CAT_ID
+        LEFT JOIN
+            $this->database f ON pf.FATHER_ID = f.ID
+        WHERE c.ID = :id"
+        ;
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }
