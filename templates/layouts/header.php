@@ -16,7 +16,7 @@
             <div class="d-flex justify-content-between align-items-center">
                 <h1 class="mb-0">Кошкин дом</h1>
                 <div>
-                    <a href="home" class="btn btn-info me-3">Список кошек</a>
+                    <a href="index.php" class="btn btn-info me-3">Список кошек</a>
                     <a href="?act=create" class="btn btn-primary me-3">Добавить Кошку</a>
                     <a href="?act=filter" class="btn btn-secondary">Фильтр по кошкам</a>
                 </div>

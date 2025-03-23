@@ -14,29 +14,24 @@ $catRepository = new CatRepository($db);
 
 $oldCat = $catRepository->getOldCat($catId);
 
-// var_dump($oldCat);die();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = strip_tags($_POST['name'] ?? $oldCat[0]['NAME']);
+    $gender = strip_tags($_POST['gender'] ?? $oldCat[0]['GENDER']);
+    $age = filter_var($_POST['age'] ?? $oldCat[0]['AGE'], FILTER_VALIDATE_INT);
+    $mother_id = !empty($_POST['mother_id']) ? (int)$_POST['mother_id'] : null;
+    $father_ids = !empty($_POST['father_ids']) ? explode(',', $_POST['father_ids']) : [];
 
-if (count($_POST) > 0) {
-    $name = strip_tags($_POST['name'] ?? '');
-    $gender = strip_tags($_POST['gender'] ?? '');
-    $age = filter_var($_POST['age'] ?? null, FILTER_VALIDATE_INT);
-    $mother_id = isset($_POST['mother_id']) && $_POST['mother_id'] !== '' ? (int)$_POST['mother_id'] : null;
-    $father_ids = explode(',', $_POST['father_ids']);
-
-    if ($name && $gender && $age !== false) {
-        try {
-            $cat = new Cat($name, $gender, $age, $mother_id, $father_ids);
-            $catRepository->addCat($cat);
-            echo "Кошка успешно добавлена!";
-        } catch (Exception $e) {
-            echo "Ошибка при добавлении кошки: " . $e->getMessage();
-        }
-    } else {
-        echo "Пожалуйста, заполните все обязательные поля.";
+    try {
+        $cat = new Cat($name, $gender, $age, $mother_id, $father_ids);
+        $catRepository->editCat($cat, $catId);
+        echo "Кошка успешно обновлена!";
+    } catch (Exception $e) {
+        echo "Ошибка при обновлении кошки: " . htmlspecialchars($e->getMessage());
     }
-    header('Location:index.php' );
-    die();
+
+    header('Location: index.php');
+    exit();
 }
 
 require_once 'templates/edit.php';

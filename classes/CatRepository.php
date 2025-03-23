@@ -85,9 +85,10 @@ class CatRepository {
 
     public function editCat(Cat $cat,$id):void
     {
-        $query = "UPDATE $this->database SET name = :name, gender = :gender, age = :age, mother_id = :mother_id WHERE id = :id";
+
+        $query = "UPDATE $this->database SET NAME = :name, GENDER = :gender, AGE = :age, MOTHER_ID = :mother_id WHERE ID = :id";
         $this->saveCat($query,$cat,$id);
-    }
+}
 
     public function deleteCat($id): void 
     {
@@ -120,7 +121,7 @@ class CatRepository {
 
     private function saveCat($query,Cat $cat, $id = null): void
     {
-       
+
         $stmt = $this->db->prepare($query);
 
         $name = $cat->getName();
@@ -138,7 +139,6 @@ class CatRepository {
         if ($id) {
             $stmt->bindParam(':id', $id);
         }
-
         $stmt->execute();
 
         if (!$id) {
