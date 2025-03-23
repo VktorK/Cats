@@ -1,0 +1,52 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+.container {
+    text-align: center;
+    color: #fff;
+}
+h1 {
+    font-size: 10rem;
+    margin: 0;
+    animation: float 3s ease-in-out infinite;
+}
+h2 {
+    font-size: 2rem;
+    margin: 20px 0;
+}
+p {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+a {
+    color: #fff;
+    text-decoration: none;
+    border: 2px solid #fff;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+a:hover {
+    background: #fff;
+    color: #ff9a9e;
+}
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+.astronaut {
+    width: 150px;
+    animation: float 3s ease-in-out infinite;
+}

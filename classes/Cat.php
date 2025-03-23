@@ -7,7 +7,7 @@
         private int $age;
         private ?int $motherId;
         private array $fatherIds;
-        private string $table = 'cats';
+
 
         public function __construct(string $name, string $gender, int $age, int $motherId = null, array $fatherIds = []) {
             $this->name = $name;
@@ -17,12 +17,6 @@
             $this->fatherIds = $fatherIds;
         }
 
-        public function  getTable(): string
-        {
-            return $this->table;
-        }
-            
-        
         public function getId(): int
         {
             return $this->id;
