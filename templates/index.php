@@ -3,19 +3,6 @@
 <main>
     <div class="container mt-5">
         <h1 class="text-center mb-4">Кошачий приют</h1>
-        <form method="GET" class="mb-4">
-            <div class="row">
-                <div class="col">
-                    <input type="text" name="name" class="form-control" placeholder="Имя кошки" value="<?= htmlspecialchars($_GET['name'] ?? '') ?>">
-                </div>
-                <div class="col">
-                    <input type="number" name="age" class="form-control" placeholder="Возраст" value="<?= htmlspecialchars($_GET['age'] ?? '') ?>">
-                </div>
-                <div class="col">
-                    <button type="submit" class="btn btn-primary">Фильтровать</button>
-                </div>
-            </div>
-        </form>
         <table class="table table-striped table-bordered">
             <thead class="table-dark">
             <tr>

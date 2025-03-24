@@ -100,22 +100,22 @@ class CatRepository {
 
     public function filterCats($age = null, $gender = null) 
     {
+//        var_dump($age);die();
         $query = "SELECT * FROM $this->database WHERE 1=1";
-        if ($age !== null) {
+        $params = [];
+
+        if (!empty($age)) {
             $query .= " AND age = :age";
+            $params[':age'] = $age;
         }
-        if ($gender !== null) {
+
+        if (!empty($gender)) {
             $query .= " AND gender = :gender";
+            $params[':gender'] = $gender;
         }
 
         $stmt = $this->db->prepare($query);
-        if ($age !== null) {
-            $stmt->bindParam(':age', $age);
-        }
-        if ($gender !== null) {
-            $stmt->bindParam(':gender', $gender);
-        }
-        $stmt->execute();
+        $stmt->execute($params);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
