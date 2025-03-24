@@ -10,10 +10,16 @@ require_once 'classes/Cat.php';
 require_once 'router.php';
 
 
+
 $db = new Database;
 $catRep = new CatRepository($db);
 
-$cats = $catRep->getAllCats();
+$age = filter_input(INPUT_GET, 'age', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) ?: '';
+$gender = isset($_GET['gender']) ? htmlspecialchars($_GET['gender'], ENT_QUOTES, 'UTF-8') : '';
+
+$cats = (!empty($age) || !empty($gender))
+    ? $catRep->filterCats($age, $gender)
+    : $catRep->getAllCats();
 
 
 if (isset($_REQUEST['act'])) {

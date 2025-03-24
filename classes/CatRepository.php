@@ -33,13 +33,13 @@ class CatRepository {
                     m.ID AS MOTHER_ID,
                     GROUP_CONCAT(f.NAME SEPARATOR ', ') AS FATHER_NAMES
                 FROM 
-                    $this->database c
+                    {$this->database} c
                 LEFT JOIN 
-                    $this->database m ON c.MOTHER_ID = m.ID
+                    {$this->database} m ON c.MOTHER_ID = m.ID
                 LEFT JOIN
-                    $this->fatherDatabase pf ON c.ID = pf.CAT_ID
+                    {$this->fatherDatabase} pf ON c.ID = pf.CAT_ID
                 LEFT JOIN
-                    $this->database f ON pf.FATHER_ID = f.ID
+                    {$this->database} f ON pf.FATHER_ID = f.ID
                 GROUP BY 
                     c.ID";
         
@@ -59,13 +59,13 @@ class CatRepository {
                     m.ID AS MOTHER_ID,
                     GROUP_CONCAT(f.NAME SEPARATOR ', ') AS FATHER_NAMES
                 FROM 
-                    $this->database c
+                    {$this->database} c
                 LEFT JOIN 
-                    $this->database m ON c.MOTHER_ID = m.ID
+                    {$this->database} m ON c.MOTHER_ID = m.ID
                 LEFT JOIN
-                    $this->fatherDatabase pf ON c.ID = pf.CAT_ID
+                    {$this->fatherDatabase} pf ON c.ID = pf.CAT_ID
                 LEFT JOIN
-                    $this->database f ON pf.FATHER_ID = f.ID
+                    {$this->database} f ON pf.FATHER_ID = f.ID
                 WHERE c.ID = :id";
 
         $stmt = $this->db->prepare($query);
@@ -78,7 +78,11 @@ class CatRepository {
 
     public function addCat(Cat $cat):void 
     {
-        $query = "INSERT INTO $this->database (NAME, GENDER, AGE, MOTHER_ID) VALUES (:name, :gender, :age, :mother_id)";
+        $query = "INSERT INTO {$this->database} 
+        (NAME, GENDER, AGE, MOTHER_ID) 
+        VALUES 
+        (:name, :gender, :age, :mother_id)";
+        
         $this->saveCat($query,$cat);
     }
 
@@ -86,38 +90,47 @@ class CatRepository {
     public function editCat(Cat $cat,$id):void
     {
 
-        $query = "UPDATE $this->database SET NAME = :name, GENDER = :gender, AGE = :age, MOTHER_ID = :mother_id WHERE ID = :id";
+        $query = "UPDATE {$this->database} SET NAME = :name, GENDER = :gender, AGE = :age, MOTHER_ID = :mother_id WHERE ID = :id";
         $this->saveCat($query,$cat,$id);
-}
+    }
 
     public function deleteCat($id): void 
     {
-        $query = "DELETE FROM $this->database WHERE id = :id";
+        $query = "DELETE FROM {$this->database} WHERE id = :id";
+
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
         $stmt->execute();
     }
 
     public function filterCats($age = null, $gender = null) 
-    {
-//        var_dump($age);die();
-        $query = "SELECT * FROM $this->database WHERE 1=1";
-        $params = [];
+{
+    $query = "SELECT * FROM {$this->database} WHERE 1=1";
+    $params = [];
 
-        if (!empty($age)) {
-            $query .= " AND age = :age";
-            $params[':age'] = $age;
-        }
+    if (!empty($age)) {
+        $query .= " AND age = :age";
+        $params[':age'] = $age;
+    }
 
-        if (!empty($gender)) {
-            $query .= " AND gender = :gender";
-            $params[':gender'] = $gender;
-        }
+    if (!empty($gender)) {
+        $gender = ($gender === 'Мужской') ? 'male' : 'female';
+        $query .= " AND gender = :gender";
+        $params[':gender'] = $gender;
+    }
 
+    try {
         $stmt = $this->db->prepare($query);
         $stmt->execute($params);
+
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    } catch (PDOException $e) {
+        error_log("Какая то херня,опять тип данных залетел в БД не верный: " . $e->getMessage());
+        return [];
     }
+}
 
     private function saveCat($query,Cat $cat, $id = null): void
     {
@@ -152,7 +165,11 @@ class CatRepository {
 
     private function addFather($catId, $fatherId):void
     {
-        $query = "INSERT INTO $this->fatherDatabase (cat_id, father_id) VALUES (:cat_id, :father_id)";
+        $query = "INSERT INTO {$this->fatherDatabase} 
+        (cat_id, father_id) 
+        VALUES 
+        (:cat_id, :father_id)";
+
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':cat_id', $catId);
         $stmt->bindParam(':father_id', $fatherId);
@@ -194,13 +211,13 @@ class CatRepository {
             GROUP_CONCAT(f.ID SEPARATOR ', ') AS FATHER_ID,
             GROUP_CONCAT(f.NAME SEPARATOR ', ') AS FATHER_NAME
         FROM 
-            $this->database c
+            {$this->database} c
         LEFT JOIN 
-            $this->database m ON c.MOTHER_ID = m.ID
+            {$this->database} m ON c.MOTHER_ID = m.ID
         LEFT JOIN
-            $this->fatherDatabase pf ON c.ID = pf.CAT_ID
+            {$this->fatherDatabase} pf ON c.ID = pf.CAT_ID
         LEFT JOIN
-            $this->database f ON pf.FATHER_ID = f.ID
+            {$this->database} f ON pf.FATHER_ID = f.ID
         WHERE c.ID = :id"
         ;
         $stmt = $this->db->prepare($query);
@@ -209,5 +226,4 @@ class CatRepository {
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
 }

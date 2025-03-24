@@ -17,4 +17,4 @@ $catRepository = new CatRepository($db);
 $catRepository->deleteCat($catId);
 
 header('Location: index.php');
-die();
+exit();

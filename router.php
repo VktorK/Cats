@@ -5,7 +5,6 @@ $routers = [
     'delete' => 'actions/delete.php',
     'show' => 'actions/show.php',
     'edit' => 'actions/edit.php',
-    'filter' => 'actions/filter.php'
 ];
 
 

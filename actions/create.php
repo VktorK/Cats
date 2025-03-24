@@ -24,7 +24,7 @@ if (count($_POST) > 0) {
         echo "Пожалуйста, заполните все обязательные поля.";
     }
     header('Location:index.php' );
-    die();
+    exit();
 }
 
 require_once 'templates/create.php';
